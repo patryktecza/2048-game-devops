@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/patryktecza/2048-game-devops'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("2048-game")
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://docker.io', 'docker-credentials') {
+                        docker.image("2048-game").push()
+                    }
+                }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    kubectl apply -f deployment.yaml
+                    kubectl apply -f service.yaml
+                }
+            }
+        }
+    }
+}
