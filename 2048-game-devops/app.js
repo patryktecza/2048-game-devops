@@ -13,7 +13,7 @@ const initGame = () => {
     gameOverDiv.style.display = "none";
 };
 
-// Funkcja dodająca losową 2 na planszę
+
 const addRandomTile = () => {
     let emptyCells = [];
     for (let i = 0; i < 4; i++) {
@@ -28,7 +28,6 @@ const addRandomTile = () => {
     }
 };
 
-// Funkcja renderująca stan gry
 const renderBoard = () => {
     board.innerHTML = '';
     grid.forEach(row => {
@@ -41,10 +40,8 @@ const renderBoard = () => {
     });
 };
 
-// Restart gry
 restartButton.addEventListener("click", () => {
     initGame();
 });
 
-// Inicjalizacja gry
 initGame();
